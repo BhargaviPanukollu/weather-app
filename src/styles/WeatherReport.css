@@ -1,0 +1,19 @@
+.weather-app {
+    width:inherit;
+    height: auto;
+}
+
+.app-intro {
+    font-size: large;
+    text-align: center;
+}
+.results-header {
+    margin-top: 40px;
+    text-align: center;
+}
+.unitSelection {
+    margin-top: 10px;
+}
+.selection {
+    color: red;
+}

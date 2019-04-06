@@ -40,8 +40,8 @@ class WeatherReport extends React.Component {
         const unitSelected = this.state.unitFahrenheit;
         this.setState({
             unitFahrenheit: !unitSelected,
-            unitFStyle: unitSelected ? "selection" : "",
-            unitCStyle: !unitSelected ? "selection" : ""
+            unitFStyle: this.state.unitFStyle === "selection" ?  "" : "selection",
+            unitCStyle: this.state.unitCStyle === "selection" ?  "" : "selection",
         });
     }
     render() {

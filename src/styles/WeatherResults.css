@@ -44,6 +44,14 @@
 .weather-details .temp:after{
     content: "\2109"
 }
+.weather-details .tempInCelsius{
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 25px;
+}
+.weather-details .tempInCelsius:after{
+    content: "\2103"
+}
 .weather-details .icon{
    vertical-align: middle;
     margin-right: 10px;
@@ -63,4 +71,7 @@
 }
 .additional-info .mintemp:after{
     content: "\2109"
+}
+.additional-info .mintempInCelsius:after{
+    content: "\2103";
 }

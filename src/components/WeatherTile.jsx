@@ -7,6 +7,7 @@ class WeatherTile extends React.Component {
     }
     render() {
         const dayForecast = this.props.dayForecast;
+        const unitFahrenheit = this.props.unit;
         const image = `http://openweathermap.org/img/w/${dayForecast.icon}.png`;
         const forecastDate = new Date(dayForecast.date);
         return (
@@ -18,12 +19,14 @@ class WeatherTile extends React.Component {
                     {months[forecastDate.getMonth()]} {forecastDate.getDate()}
                 </div>
                 <div className="weather-details">
-                    <div className="temp">{dayForecast.temp}</div>
+                    {unitFahrenheit && <div className="temp">{dayForecast.temp}</div>}
+                    {!unitFahrenheit && <div className="tempInCelsius">{dayForecast.temp}</div>}
                     <div><img src={image} className="icon"/>{dayForecast.description}</div>
                 </div>
                 <div className="additional-info">
                     <span className="maxtemp">{dayForecast.tempMax}</span>
-                    <span className="mintemp"> | {dayForecast.tempMin}</span>
+                    {unitFahrenheit && <span className="mintemp"> | {dayForecast.tempMin}</span>}
+                    {!unitFahrenheit && <span className="mintempInCelsius"> | {dayForecast.tempMin}</span>}
                 </div>
             </div>
         );

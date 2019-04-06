@@ -14,7 +14,7 @@ class WeatherResults extends React.Component {
     }
 
     componentDidMount() {
-        this.getWeatherData(this.props.location);
+        this.getWeatherData(this.props.location, this.props.unitFahrenheit);
     }
 
     constructWeatherForecastObject = (forecast) => {
@@ -34,8 +34,8 @@ class WeatherResults extends React.Component {
         });
     }
 
-    getWeatherData = (location) => {
-        const unit = this.props.unitFahrenheit ? "imperial" : "metric";
+    getWeatherData = (location, isUnitFahrenheit) => {
+        const unit = isUnitFahrenheit ? "imperial" : "metric";
         if (!WeatherReportUtil.isForcastForLocationAvailable(this.state.weatherForecastCache, location)) {
             const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`;
             window.fetch(url).then(response => {
@@ -50,16 +50,18 @@ class WeatherResults extends React.Component {
     }
     renderTiles = () => {
         const forecast = this.state.weatherForecastCache;
+        const unit = this.props.unitFahrenheit;
         const weatherTiles = [];
         for (let i = 0; i < forecast.length; i++) {
-            weatherTiles.push(<WeatherTile dayForecast={forecast[i]}/>);
+            weatherTiles.push(<WeatherTile dayForecast={forecast[i]} unit={unit}/>);
 
         }
         return weatherTiles;
     }
     componentWillReceiveProps(nextProps) {
-        const location = nextProps.location;
-        this.getWeatherData(location);
+        if(this.props.location !== nextProps.location || this.props.unitFahrenheit !== nextProps.unitFahrenheit) {
+            this.getWeatherData(nextProps.location, nextProps.unitFahrenheit);
+        }
     }
 
     /**

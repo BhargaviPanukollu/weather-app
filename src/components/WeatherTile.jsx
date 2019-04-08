@@ -16,7 +16,7 @@ class WeatherTile extends React.Component {
                     <div className="card-header">{days[forecastDate.getDay()]}</div>
                 </header>
                 <div className="day-details">
-                    {months[forecastDate.getMonth()]} {forecastDate.getDate()}
+                    {months[forecastDate.getMonth()]} <span className="forecast-date">{forecastDate.getDate()}</span>
                 </div>
                 <div className="weather-details">
                     {unitFahrenheit && <div className="temp">{dayForecast.temp}</div>}
@@ -24,9 +24,9 @@ class WeatherTile extends React.Component {
                     <div><img src={image} className="icon"/>{dayForecast.description}</div>
                 </div>
                 <div className="additional-info">
-                    <span className="maxtemp">{dayForecast.tempMax}</span>
-                    {unitFahrenheit && <span className="mintemp"> | {dayForecast.tempMin}</span>}
-                    {!unitFahrenheit && <span className="mintempInCelsius"> | {dayForecast.tempMin}</span>}
+                    <span className="maxtemp">{dayForecast.tempMax}</span> |
+                    {unitFahrenheit && <span className="mintemp"> {dayForecast.tempMin}</span>}
+                    {!unitFahrenheit && <span className="mintempInCelsius"> {dayForecast.tempMin}</span>}
                 </div>
             </div>
         );

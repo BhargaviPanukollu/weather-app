@@ -55,7 +55,7 @@ class WeatherReport extends React.Component {
                     city={this.state.citySelected}
                     onStateChange={this.handleStateChange}
                     onCityChange={this.handleCityChange}/>
-                <p className="results-header">Next 5 Days weather forecast for {this.state.citySelected} in <div className="unitSelection" onClick={this.handleUnitToggle}><span className={this.state.unitFStyle}>F</span> | <span className={this.state.unitCStyle}>C</span></div></p>
+                <p className="results-header">5 Days weather forecast for {this.state.citySelected} in <div className="unitSelection" onClick={this.handleUnitToggle}><span className={this.state.unitFStyle}>F</span> | <span className={this.state.unitCStyle}>C</span></div></p>
                 <WeatherResults location={location} unitFahrenheit={this.state.unitFahrenheit}/>
             </div>
         );

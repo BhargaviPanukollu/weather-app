@@ -29,13 +29,5 @@ class WeatherReportUtil {
             return false;
         }
     }
-    getForecastForDay(pForecastForLocation, pDate) {
-        const lForecastForDay = pForecastForLocation.forecast.find(
-            function(pForecastObject){
-                return pForecastObject.date === pDate;
-            }
-        );
-        return lForecastForDay;
-    }
 }
 export default new WeatherReportUtil();

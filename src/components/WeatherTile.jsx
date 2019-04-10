@@ -2,9 +2,6 @@ import React from 'react';
 import {days, months} from '../utils/constants';
 
 class WeatherTile extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         const dayForecast = this.props.dayForecast;
         const unitFahrenheit = this.props.unit;
@@ -21,7 +18,7 @@ class WeatherTile extends React.Component {
                 <div className="weather-details">
                     {unitFahrenheit && <div className="temp">{dayForecast.temp}</div>}
                     {!unitFahrenheit && <div className="tempInCelsius">{dayForecast.temp}</div>}
-                    <div><img src={image} className="icon"/>{dayForecast.description}</div>
+                    <div><img src={image} className="icon" alt="weathericon"/>{dayForecast.description}</div>
                 </div>
                 <div className="additional-info">
                     <span className="maxtemp">{dayForecast.tempMax}</span> |

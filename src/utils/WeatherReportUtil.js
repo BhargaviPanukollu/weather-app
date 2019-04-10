@@ -10,21 +10,24 @@ class WeatherReportUtil {
     getStateAbbreviations() {
         return states;
     }
-    getForecastForLocation(pWeatherForecastCache, pLocation) {
-        const lForecastForLocation = pWeatherForecastCache.find(
-            function(pWeatherForecaseObject){
-                return pWeatherForecaseObject.location === pLocation;
-            }
-        );
-        return lForecastForLocation;
+    getForecastForLocation(weatherForecastCache, location, isUnitFahren) {
+        const metrictoCheck = isUnitFahren ? "F" : "C";
+        const locationForecast = weatherForecastCache.length > 0 ? weatherForecastCache.filter(forecast => forecast.city === location) : null;
+        if (locationForecast) {
+            const forecastbyMetric = locationForecast.length > 0 && locationForecast.filter( forecast => forecast.metric === metrictoCheck);
+            return forecastbyMetric[0].forecast;
+        }
     }
-    isForcastForLocationAvailable(pWeatherForecastCache, pLocation) {
-        const lForecastForLocation = pWeatherForecastCache.find(
-            function(pWeatherForcastObject){
-                return pWeatherForcastObject.location === pLocation;
-            }
-        );
-        return lForecastForLocation ? true : false;
+    isForcastForLocationAvailable(weatherForecastCache, location, isUnitFahren) {
+        const metrictoCheck = isUnitFahren ? "F" : "C";
+        const locationForecast = weatherForecastCache.length > 0 ? weatherForecastCache.filter(forecast => forecast.city === location) : null;
+        if (locationForecast) {
+            const forecastbyMetric = locationForecast.length > 0 && locationForecast.filter( forecast => forecast.metric === metrictoCheck);
+            return (forecastbyMetric && forecastbyMetric.length > 0);
+
+        } else{
+            return false;
+        }
     }
     getForecastForDay(pForecastForLocation, pDate) {
         const lForecastForDay = pForecastForLocation.forecast.find(

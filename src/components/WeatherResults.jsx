@@ -8,8 +8,9 @@ class WeatherResults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            weatherForecastCache: [],
-            dataReady: false
+            weatherForecastToday: [],
+            dataReady: false,
+            weatherForecastCache: []
         };
     }
 
@@ -18,7 +19,7 @@ class WeatherResults extends React.Component {
     }
 
     constructWeatherForecastObject = (forecast) => {
-        const cityName = forecast.city.name;
+        // const cityName = forecast.city.name;
         const forecastlist = forecast.list.filter(x=>x.dt_txt && x.dt_txt.includes("06:00:00"));
         const fivedayforecast = forecastlist.map((weather) => ({
             date: weather.dt_txt.split(" ")[0],
@@ -28,15 +29,29 @@ class WeatherResults extends React.Component {
             description: weather.weather[0].description,
             icon: weather.weather[0].icon
         }));
+        const forecastToCache = this.constructForecastCache(fivedayforecast);
+        const availableForecastCache = this.state.weatherForecastCache;
+        availableForecastCache.push(forecastToCache);
         this.setState({
-            weatherForecastCache: fivedayforecast,
+            weatherForecastToday: fivedayforecast,
+            weatherForecastCache: availableForecastCache,
             dataReady: true
         });
     }
 
+    constructForecastCache = (forecast) => {
+        const todaysDate = new Date();
+        return {
+            forecast: forecast,
+            city: this.props.location,
+            hour: todaysDate.getHours(),
+            metric: this.props.unitFahrenheit ? "F" : "C"
+        };
+    }
+
     getWeatherData = (location, isUnitFahrenheit) => {
         const unit = isUnitFahrenheit ? "imperial" : "metric";
-        if (!WeatherReportUtil.isForcastForLocationAvailable(this.state.weatherForecastCache, location)) {
+        if (!WeatherReportUtil.isForcastForLocationAvailable(this.state.weatherForecastCache, location, isUnitFahrenheit)) {
             const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`;
             window.fetch(url).then(response => {
                 if(response.ok) {
@@ -46,14 +61,20 @@ class WeatherResults extends React.Component {
                 }
 
             });
+        } else {
+            const locationWeatherForecast = WeatherReportUtil.getForecastForLocation(this.state.weatherForecastCache, location, isUnitFahrenheit);
+            this.setState({
+                weatherForecastToday: locationWeatherForecast,
+                dataReady: true
+            })
         }
     }
     renderTiles = () => {
-        const forecast = this.state.weatherForecastCache;
+        const forecast = this.state.weatherForecastToday;
         const unit = this.props.unitFahrenheit;
         const weatherTiles = [];
         for (let i = 0; i < forecast.length; i++) {
-            weatherTiles.push(<WeatherTile dayForecast={forecast[i]} unit={unit}/>);
+            weatherTiles.push(<WeatherTile key={i} dayForecast={forecast[i]} unit={unit}/>);
 
         }
         return weatherTiles;
@@ -69,15 +90,12 @@ class WeatherResults extends React.Component {
      * read the weather forcast details from our cache maintained under state.
      */
     render() {
-        return(<div>
-            {this.state.dataReady &&
-            <div className="container">
+        return(<div className="container">
                 <div className="card-wrapper">
-                    {this.renderTiles()}
+                    {this.state.dataReady && this.renderTiles()}
                 </div>
             </div>
-            }
-            </div>);
+            );
     }
 }
 

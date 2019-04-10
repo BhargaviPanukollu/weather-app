@@ -8,7 +8,7 @@ class WeatherTile extends React.Component {
     render() {
         const dayForecast = this.props.dayForecast;
         const unitFahrenheit = this.props.unit;
-        const image = `http://openweathermap.org/img/w/${dayForecast.icon}.png`;
+        const image = `https://openweathermap.org/img/w/${dayForecast.icon}.png`;
         const forecastDate = new Date(dayForecast.date);
         return (
             <div className="card">

@@ -36,26 +36,28 @@ class WeatherReport extends React.Component {
         this.setState({citySelected: city});
         localStorage.setItem('citySelected', city);
     }
-    handleUnitToggle = () => {
-        const unitSelected = this.state.unitFahrenheit;
-        this.setState({
-            unitFahrenheit: !unitSelected,
-            unitFStyle: this.state.unitFStyle === "selection" ?  "" : "selection",
-            unitCStyle: this.state.unitCStyle === "selection" ?  "" : "selection",
-        });
+    handleUnitToggle = (event) => {
+        if (["unitSelection", "selection"].includes(event.target.className)) {
+            const unitSelected = this.state.unitFahrenheit;
+            this.setState({
+                unitFahrenheit: !unitSelected,
+                unitFStyle: this.state.unitFStyle === "selection" ?  "" : "selection",
+                unitCStyle: this.state.unitCStyle === "selection" ?  "" : "selection",
+            });
+        }
     }
     render() {
         const location = `${this.state.citySelected},us`;
         return (
             <div className="weather-app">
-                <p className="app-intro">Select city for weather details</p>
+                <div className="app-intro">Select city for weather details</div>
                 <CitySelection
                     className="location-selection-component"
                     state={this.state.stateSelected}
                     city={this.state.citySelected}
                     onStateChange={this.handleStateChange}
                     onCityChange={this.handleCityChange}/>
-                <p className="results-header">5 Days weather forecast for {this.state.citySelected} in <div className="unitSelection" onClick={this.handleUnitToggle}><span className={this.state.unitFStyle}>F</span> | <span className={this.state.unitCStyle}>C</span></div></p>
+                <div className="results-header">5 Days weather forecast for {this.state.citySelected} in <div className="unitSelection" onClick={this.handleUnitToggle}><span className={this.state.unitFStyle}>F</span> | <span className={this.state.unitCStyle}>C</span></div></div>
                 <WeatherResults location={location} unitFahrenheit={this.state.unitFahrenheit}/>
             </div>
         );

@@ -52,7 +52,8 @@ class WeatherResults extends React.Component {
     getWeatherData = (location, isUnitFahrenheit) => {
         const unit = isUnitFahrenheit ? "imperial" : "metric";
         if (!WeatherReportUtil.isForcastForLocationAvailable(this.state.weatherForecastCache, location, isUnitFahrenheit)) {
-            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`;
+            // const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`;
+            const url = `/forecasts/Mountain%20View`;
             window.fetch(url).then(response => {
                 if(response.ok) {
                     response.json().then(res => {

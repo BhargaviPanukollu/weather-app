@@ -22,8 +22,7 @@ class CitySelection extends React.Component {
             <select
                 className = "state-select"
                 value={state}
-                onChange={this.handleStateChange}
-            >
+                onChange={this.handleStateChange}>
                 {allUSStateAbbreviations.map(createUSStateOptions)}
             </select>
         );
@@ -33,15 +32,12 @@ class CitySelection extends React.Component {
         const state = this.props.state || "CA";
         const citiesInState = WeatherReportUtil.getCitiesofState(state);
         const createCityOptions = (city) => {
-            return <option key={city.toLowerCase()} value={city.toLowerCase()}>{city}</option>;
+            return <option key={city.toLowerCase()} value={city}/>;
         };
-        return (
-            <select
-                className = "city-select"
-                value={this.props.city}
-                onChange={this.handleCityChange}>
-                {citiesInState.map(createCityOptions)}
-            </select>
+        return (<div className="cityTypeahead">
+                <input list="citiesList" className="city-select" value={this.props.city} onChange={this.handleCityChange} placeholder="select city"/>
+                <datalist id="citiesList">{citiesInState.map(createCityOptions)}</datalist>
+            </div>
         );
     }
     render() {

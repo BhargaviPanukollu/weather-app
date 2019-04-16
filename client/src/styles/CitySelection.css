@@ -1,6 +1,9 @@
 .location-widgets {
    text-align: center;
 }
+.cityTypeahead{
+    display: inline-block;
+}
 
 .state-select {
     display: inline-block;
@@ -27,7 +30,7 @@
     display: inline-block;
     box-sizing: border-box;
     position: relative;
-    width: 200px;
+    width: 150px;
     height: 34px;
     color: #B8B8B8;
     caret-color: auto;

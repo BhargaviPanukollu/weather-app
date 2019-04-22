@@ -4,5 +4,5 @@ module.exports = (app) => {
     app.get('/forecasts', forecasts.findAll);
 
     // Retrieve forecast of a city
-    app.get('/forecasts/:cityName', forecasts.findOne);
+    app.get('/forecasts/:cityName.:unit', forecasts.findOne);
 }

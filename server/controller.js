@@ -3,27 +3,26 @@ exports.findAll = (req, res) => {
     forecasts.find().then(forecasts => {
             res.send(forecasts);
         }).catch(err => {res.status(500).send({
-            message: err.message || "Some error occurred while retrieving notes."
+            message: err.message || "Some error occurred while retrieving forecasts."
         });
     });
 };
 
 exports.findOne = (req, res) => {
-    forecasts.find({"city.name" : req.params.cityName}).then(forecast => {
-            if(!forecast) {
-                return res.status(404).send({
-                    message: "Forecast not found with cityName " + req.params.cityName
-                });
+    forecasts.find({"city.name" : req.params.cityName, "city.unit" : req.params.unit}).then(forecast => {
+            if(forecast && forecast.length > 0) {
+                res.send(forecast[0]);
+            } else {
+                res.redirect(301, `https://api.openweathermap.org/data/2.5/forecast?q=${req.params.cityName}&units=${req.params.unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`);
             }
-            res.send(forecast[0]);
         }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "Note not found with id " + req.params.cityName
+                message: "Forecast not found for city " + req.params.cityName
             });
         }
         return res.status(500).send({
-            message: "Error retrieving note with id " + req.params.cityName
+            message: "Error retrieving forecast for city " + req.params.cityName + err.message
         });
     });
 };

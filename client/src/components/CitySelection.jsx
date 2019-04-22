@@ -3,9 +3,6 @@ import WeatherReportUtil from "../utils/WeatherReportUtil";
 import "../styles/CitySelection.css";
 
 class CitySelection extends React.Component {
-    constructor(props){
-        super(props);
-    }
     handleStateChange = (event) => {
         this.props.onStateChange(event.target.value);
     }

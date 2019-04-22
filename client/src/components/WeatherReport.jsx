@@ -47,7 +47,7 @@ class WeatherReport extends React.Component {
         }
     }
     render() {
-        const location = `${this.state.citySelected},us`;
+        const location = `${this.state.citySelected}`;
         return (
             <div className="weather-app">
                 <div className="app-intro">Select city for weather details</div>

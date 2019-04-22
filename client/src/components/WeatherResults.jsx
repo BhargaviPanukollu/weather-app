@@ -1,6 +1,7 @@
 import React from 'react';
 import WeatherReportUtil from '../utils/WeatherReportUtil';
 import WeatherTile from './WeatherTile';
+import TodaysWeather from './TodaysWeather';
 import 'whatwg-fetch';
 import '../styles/WeatherResults.css';
 
@@ -19,15 +20,21 @@ class WeatherResults extends React.Component {
     }
 
     constructWeatherForecastObject = (forecast) => {
-        // const cityName = forecast.city.name;
+        const cityName = forecast.city.name;
         const forecastlist = forecast.list.filter(x=>x.dt_txt && x.dt_txt.includes("06:00:00"));
         const fivedayforecast = forecastlist.map((weather) => ({
             date: weather.dt_txt.split(" ")[0],
             temp: weather.main.temp,
             tempMin: weather.main.temp_min,
             tempMax: weather.main.temp_max,
+            humidity: weather.main.humidity,
+            pressure: weather.main.pressure,
+            windSpeed: weather.wind.speed,
+            windDegree: weather.wind.deg,
             description: weather.weather[0].description,
-            icon: weather.weather[0].icon
+            icon: weather.weather[0].icon,
+            cloudiness: weather.clouds.all,
+            cityName: cityName
         }));
         const forecastToCache = this.constructForecastCache(fivedayforecast);
         const availableForecastCache = this.state.weatherForecastCache;
@@ -81,6 +88,14 @@ class WeatherResults extends React.Component {
         }
         return weatherTiles;
     }
+    renderWeather = () => {
+        const forecast = this.state.weatherForecastToday;
+        const unit = this.props.unitFahrenheit;
+        const state = this.props.state;
+        return (
+            <TodaysWeather dayForecast={forecast[0]} unit={unit} state={state}/>
+        );
+    };
     componentWillReceiveProps(nextProps) {
         if(this.props.location !== nextProps.location || this.props.unitFahrenheit !== nextProps.unitFahrenheit) {
             this.getWeatherData(nextProps.location, nextProps.unitFahrenheit);
@@ -92,12 +107,14 @@ class WeatherResults extends React.Component {
      * read the weather forcast details from our cache maintained under state.
      */
     render() {
-        return(<div className="container">
-                <div className="card-wrapper">
-                    {this.state.dataReady && this.renderTiles()}
+        return(<div>
+                <div>{this.state.dataReady && this.renderWeather()}</div>
+                <div className="container">
+                    <div className="card-wrapper">
+                        {this.state.dataReady && this.renderTiles()}
+                    </div>
                 </div>
-            </div>
-            );
+        </div>);
     }
 }
 

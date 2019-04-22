@@ -1,7 +1,6 @@
 .container{
     width: 100vw;
     display:flex;
-    margin-top: 50px;
 }
 .card-wrapper{
     position: relative;
@@ -89,3 +88,34 @@
 .additional-info .mintempInCelsius:after{
     content: "\2103";
 }
+.currentSelection {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 15px;
+}
+.selection-weather {
+    padding: 20px;
+}
+.selection-meta {
+    padding: 20px 20px 20px 80px;
+}
+.currentSelection .icon{
+    vertical-align: middle;
+    margin-right: 10px;
+    height: 100px;
+    width: 100px;
+}
+.currentSelection .temp{
+    font-size: 25px;
+}
+.currentSelection .wind:after {
+    content: "\00b0";
+}
+.selection-city {
+    font-size: 25px;
+    font-weight: 500;
+}
+

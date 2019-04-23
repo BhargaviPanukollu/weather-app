@@ -13,13 +13,13 @@ class TodaysWeather extends React.Component {
                     <div className="selection-city">{dayForecast.cityName}, {this.props.state.toUpperCase()}</div>
                     <div>{days[forecastDate.getDay()]}, {forecastDate.getDate()} {months[forecastDate.getMonth()]} {forecastDate.getFullYear()}</div>
                     <div>{dayForecast.description}</div>
-                    <div className="temp"><img src={image} className="icon" alt="weathericon"/>{dayForecast.temp}<div className="unitSelection" onClick={this.handleUnitToggle}><span className={this.props.unitFStyle}>F</span> | <span className={this.props.unitCStyle}>C</span></div></div>
+                    <div className="temp"><img src={image} className="icon" alt="weathericon"/>{dayForecast.temp}</div>
                 </header>
-                <div className="selection-meta">
-                    <div>Humidity: {dayForecast.humidity}%</div>
-                    <div className="wind">Wind: {dayForecast.windSpeed} {unitFahrenheit && <span> mph</span>} {!unitFahrenheit && <span> mps</span>} {dayForecast.windDegree}</div>
-                    <div>Cloudiness: {dayForecast.cloudiness}%</div>
-                    <div>Pressure: {dayForecast.pressure} hPa</div>
+                <div className="selectionMeta">
+                    <div>Humidity: <span className="value">{dayForecast.humidity}%</span></div>
+                    <div className="wind">Wind: <span className="value">{dayForecast.windSpeed} {unitFahrenheit && <span> mph</span>} {!unitFahrenheit && <span> mps</span>} {dayForecast.windDegree}</span></div>
+                    <div>Cloudiness: <span className="value">{dayForecast.cloudiness}%</span></div>
+                    <div>Pressure: <span className="value">{dayForecast.pressure} hPa</span></div>
                 </div>
             </div>
         );

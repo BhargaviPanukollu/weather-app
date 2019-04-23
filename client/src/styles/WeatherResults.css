@@ -98,7 +98,6 @@
 }
 .currentSelection .icon{
     vertical-align: middle;
-    margin-right: 10px;
     height: 100px;
     width: 100px;
 }
@@ -112,11 +111,15 @@
 .selection-city {
     font-size: 25px;
     font-weight: 500;
+    padding-bottom: 15px;
 }
 .temp:after {
     content: "\00b0";
 }
 .currentSelection .value {
     color:black;
+}
+.currentSelection div{
+    padding-bottom: 5px;
 }
 

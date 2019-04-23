@@ -9,6 +9,9 @@ class CitySelection extends React.Component {
     handleCityChange = (event) => {
         this.props.onCityChange(event.target.value);
     }
+    handleCityFocus = () => {
+        this.inputCity.value = "";
+    }
     renderStateSelection() {
         const state = this.props.state || "CA";
         const allUSStateAbbreviations = WeatherReportUtil.getStateAbbreviations();
@@ -32,7 +35,7 @@ class CitySelection extends React.Component {
             return <option key={city.toLowerCase()} value={city}/>;
         };
         return (<div className="cityTypeahead">
-                <input list="citiesList" className="city-select" value={this.props.city} onChange={this.handleCityChange} placeholder="select city"/>
+                <input list="citiesList" className="city-select" value={this.props.city} onChange={this.handleCityChange} ref={el => this.inputCity = el} onFocus={this.handleCityFocus} placeholder="select city"/>
                 <datalist id="citiesList">{citiesInState.map(createCityOptions)}</datalist>
             </div>
         );

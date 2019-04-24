@@ -4,6 +4,8 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 import WeatherResults from '../../components/WeatherResults';
 import WeatherResultsMock from '../mock/WeatherResultsMock';
+import WeatherReportUtilMock from '../mock/WeatherReportUtilMock';
+import WeatherReportUtil from '../../utils/WeatherReportUtil';
 import Adapter from 'enzyme-adapter-react-16'
 configure({ adapter: new Adapter() });
 
@@ -49,5 +51,22 @@ describe("<WeatherResults/>", () => {
         weatherResults.setProps(newProps);
         expect(getWeatherDataSpy.calledOnce).to.equal(false);
         getWeatherDataSpy.restore();
+    });
+    it("Test getWeatherData when forecast data is available in cache", () => {
+        const getForecastForLocationSpy = sinon.spy(WeatherReportUtil, "getForecastForLocation");
+        weatherResults.setState({weatherForecastCache: WeatherReportUtilMock});
+        weatherResults.instance().getWeatherData("Branford", true);
+        expect(getForecastForLocationSpy.calledOnce).to.equal(true);
+        expect(weatherResults.state().weatherForecastToday.length).to.equal(5);
+        expect(weatherResults.state().dataReady).to.equal(true);
+        expect(weatherResults.state().showError).to.equal(false);
+        getForecastForLocationSpy.restore();
+    });
+    it("Test getWeatherData when forecast data is not fetched", () => {
+        fetchStub.returns(Promise.resolve({ ok: false,
+            status: 404}));
+        weatherResults.instance().getWeatherData("Sunny Vale", true);
+        expect(weatherResults.state().dataReady).to.equal(false);
+        expect(weatherResults.state().showError).to.equal(true);
     });
 });

@@ -1,0 +1,14 @@
+.error-container{
+    text-align: center;
+    margin-top: 45px;
+}
+label {
+    font-weight: 500;
+    font-size: 25px;
+}
+p {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    margin-top: 10px;
+}

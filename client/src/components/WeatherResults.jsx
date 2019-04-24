@@ -2,6 +2,7 @@ import React from 'react';
 import WeatherReportUtil from '../utils/WeatherReportUtil';
 import WeatherTile from './WeatherTile';
 import TodaysWeather from './TodaysWeather';
+import Error from './Error';
 import 'whatwg-fetch';
 import '../styles/WeatherResults.css';
 
@@ -11,7 +12,8 @@ class WeatherResults extends React.Component {
         this.state = {
             weatherForecastToday: [],
             dataReady: false,
-            weatherForecastCache: []
+            weatherForecastCache: [],
+            showError: false
         };
     }
 
@@ -44,7 +46,8 @@ class WeatherResults extends React.Component {
         this.setState({
             weatherForecastToday: fivedayforecast,
             weatherForecastCache: availableForecastCache,
-            dataReady: true
+            dataReady: true,
+            showError: false
         });
     }
     /**
@@ -72,6 +75,11 @@ class WeatherResults extends React.Component {
                     response.json().then(res => {
                         this.constructWeatherForecastObject(res);
                     });
+                } else {
+                    this.setState({
+                        showError: true,
+                        dataReady: false
+                    });
                 }
             }).catch(error => {
                 console.log("Error in fetching weather forecast", error.message);
@@ -80,7 +88,8 @@ class WeatherResults extends React.Component {
             const locationWeatherForecast = WeatherReportUtil.getForecastForLocation(this.state.weatherForecastCache, location, isUnitFahrenheit);
             this.setState({
                 weatherForecastToday: locationWeatherForecast,
-                dataReady: true
+                dataReady: true,
+                showError: false
             })
         }
     }
@@ -130,6 +139,7 @@ class WeatherResults extends React.Component {
                         {this.state.dataReady && this.renderTiles()}
                     </div>
                 </div>
+                <div>{this.state.showError && <Error/>}</div>
         </div>);
     }
 }

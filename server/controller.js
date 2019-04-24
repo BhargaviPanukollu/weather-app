@@ -7,6 +7,11 @@ exports.findAll = (req, res) => {
         });
     });
 };
+/**
+ * findOne first checks if data exists in our DB, if it doesn't exists we send a redirection
+ * to openweathermap api to fetch forecast details.
+ * Here we will maintain records in DB related to Mountain View for demo purpose.
+ */
 
 exports.findOne = (req, res) => {
     forecasts.find({"city.name" : req.params.cityName, "city.unit" : req.params.unit}).then(forecast => {

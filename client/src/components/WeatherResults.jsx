@@ -18,7 +18,9 @@ class WeatherResults extends React.Component {
     componentDidMount() {
         this.getWeatherData(this.props.location, this.props.unitFahrenheit);
     }
-
+    /**
+     * constructWeatherForecastObject maps and parse the forecast data required to paint the UI
+     */
     constructWeatherForecastObject = (forecast) => {
         const cityName = forecast.city.name;
         const forecastlist = forecast.list.filter(x=>x.dt_txt && x.dt_txt.includes("06:00:00"));
@@ -45,7 +47,9 @@ class WeatherResults extends React.Component {
             dataReady: true
         });
     }
-
+    /**
+     * constructForecastCache constructs the forecast data to cache with city and metric details.
+     */
     constructForecastCache = (forecast) => {
         const todaysDate = new Date();
         return {
@@ -55,11 +59,13 @@ class WeatherResults extends React.Component {
             metric: this.props.unitFahrenheit ? "F" : "C"
         };
     }
-
+    /**
+     * getWeatherData is used to fetch forecast, here we first check in cache for data.
+     * If exists use the data from cache or make an api call.
+     */
     getWeatherData = (location, isUnitFahrenheit) => {
         const unit = isUnitFahrenheit ? "imperial" : "metric";
         if (!WeatherReportUtil.isForcastForLocationAvailable(this.state.weatherForecastCache, location, isUnitFahrenheit)) {
-            // const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=${unit}&appid=5463248286578faf66ef6edca6ae1569&format=json`;
             const url = `/forecasts/${location}.${unit}`;
             window.fetch(url).then(response => {
                 if(response.ok) {
@@ -78,6 +84,10 @@ class WeatherResults extends React.Component {
             })
         }
     }
+    /**
+     * renderTiles loops through available forecast data and paints a tile for each forecast.
+     * 5 day forecast will have 5 tiles.
+     */
     renderTiles = () => {
         const forecast = this.state.weatherForecastToday;
         const unit = this.props.unitFahrenheit;
@@ -88,6 +98,9 @@ class WeatherResults extends React.Component {
         }
         return weatherTiles;
     }
+    /**
+     * rrenderWeather renders todays weather showing other details compared to tiles.
+     */
     renderWeather = () => {
         const forecast = this.state.weatherForecastToday;
         const unit = this.props.unitFahrenheit;
@@ -96,6 +109,9 @@ class WeatherResults extends React.Component {
             <TodaysWeather dayForecast={forecast[0]} unit={unit} state={state}/>
         );
     };
+    /**
+     * Here we check if location or metric has changed before making call to fetch forecast
+     */
     componentWillReceiveProps(nextProps) {
         if(this.props.location !== nextProps.location || this.props.unitFahrenheit !== nextProps.unitFahrenheit) {
             this.getWeatherData(nextProps.location, nextProps.unitFahrenheit);
@@ -104,7 +120,7 @@ class WeatherResults extends React.Component {
 
     /**
      * Actual render method to render weather tiles. Before we render, we would
-     * read the weather forcast details from our cache maintained under state.
+     * read the weather forecast details from our cache maintained under state.
      */
     render() {
         return(<div>

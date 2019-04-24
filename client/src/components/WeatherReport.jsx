@@ -21,7 +21,10 @@ class WeatherReport extends React.Component {
             unitCStyle: ""
         };
     }
-
+    /**
+     * handleStateChange fetches the cities for selected state and also sets the localStorage
+     * to persist the selection.
+     */
     handleStateChange = (state) => {
         const citiesofState = WeatherReportUtil.getCitiesofState(state);
         this.setState({
@@ -31,11 +34,16 @@ class WeatherReport extends React.Component {
         localStorage.setItem('stateSelected', state);
         localStorage.setItem('citySelected', citiesofState[0]);
     }
-
+    /**
+     * handleCityChange sets the state to trigger rerender and also sets it to localStorage for persistance.
+     */
     handleCityChange = (city) => {
         this.setState({citySelected: city});
         localStorage.setItem('citySelected', city);
     }
+    /**
+     * handleUnitToggle records the metric(F|C) selection made and highlights the selected metric.
+     */
     handleUnitToggle = (event) => {
         if (["unitSelection", "selection"].includes(event.target.className)) {
             const unitSelected = this.state.unitFahrenheit;

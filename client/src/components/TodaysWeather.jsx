@@ -10,7 +10,7 @@ class TodaysWeather extends React.Component {
         return (
             <div className="currentSelection">
                 <header className="selection-weather">
-                    <div className="selection-city">{dayForecast.cityName}, {this.props.state.toUpperCase()}</div>
+                    <div className="selection-city">{dayForecast.cityName}</div>
                     <div>{days[forecastDate.getDay()]}, {forecastDate.getDate()} {months[forecastDate.getMonth()]} {forecastDate.getFullYear()}</div>
                     <div>{dayForecast.description}</div>
                     <div className="temp"><img src={image} className="icon" alt="weathericon"/>{dayForecast.temp}</div>

@@ -12,6 +12,9 @@ class CitySelection extends React.Component {
     handleCityFocus = () => {
         this.inputCity.value = "";
     }
+    /**
+     * renderStateSelection maps all states available and renders it as dropdown.
+     */
     renderStateSelection() {
         const state = this.props.state || "CA";
         const allUSStateAbbreviations = WeatherReportUtil.getStateAbbreviations();
@@ -27,7 +30,9 @@ class CitySelection extends React.Component {
             </select>
         );
     }
-
+    /**
+     * renderCitySelection renders all cities associated with the selected state.
+     */
     renderCitySelection() {
         const state = this.props.state || "CA";
         const citiesInState = WeatherReportUtil.getCitiesofState(state);

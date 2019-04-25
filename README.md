@@ -1,5 +1,5 @@
 ##AWS deployment instance
-http://ec2-18-191-137-245.us-east-2.compute.amazonaws.com
+http://ec2-52-15-208-213.us-east-2.compute.amazonaws.com
 
 ##Techincal Details
 This app uses [openweathermap 5 day forecast api](https://openweathermap.org/forecast5) to fetch weather forecast for a city.
